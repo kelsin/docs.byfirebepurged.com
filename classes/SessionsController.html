@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>SessionsController</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          SessionsController
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../files/app/controllers/sessions_controller_rb.html">app/controllers/sessions_controller.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Superclass:
+          <strong><a target="docwin" href="ApplicationController.html">ApplicationController</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'></div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-create">create</a></li>
+              <li><a target="docwin" href="#method-i-new">new</a></li>
+            </ol>
+            <h3>Protected Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-auth_hash">auth_hash</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-create'>
+                <a name='method-i-create'></a>
+                <div class='synopsis'>
+                  <span class='name'>create</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-create-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-create-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 15</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>&#x000A;  <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-identifier">auth_hash</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-new'>
+                <a name='method-i-new'></a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-new-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-new-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 2</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Must provide a redirect value&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>]&#x000A;&#x000A;  <span class="ruby-identifier">redirect</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>]) <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>&#x000A;&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">redirect</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>) <span class="ruby-keyword">or</span> <span class="ruby-identifier">redirect</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPS</span>)&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Redirect value must be a valid http or https url&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@login</span> = <span class="ruby-constant">Login</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>,&#x000A;                        <span class="ruby-value">:redirect</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>])&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <h2>Protected Instance methods</h2>
+              <div class='method protected-instance' id='method-method-i-auth_hash'>
+                <a name='method-i-auth_hash'></a>
+                <div class='synopsis'>
+                  <span class='name'>auth_hash</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-auth_hash-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-auth_hash-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 21</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">auth_hash</span>&#x000A;  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-string">&#39;omniauth.auth&#39;</span>]&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>
