@@ -1,4 +1,4 @@
-Tue, 02 Dec 2014 10:14:09 -0800
+Tue, 02 Dec 2014 10:30:22 -0800
 app/controllers/application_controller.rb	Tue, 02 Dec 2014 08:35:29 -0800
 app/controllers/sessions_controller.rb	Tue, 02 Dec 2014 08:35:29 -0800
 app/helpers/application_helper.rb	Tue, 02 Dec 2014 08:35:29 -0800
@@ -29,4 +29,4 @@ config/initializers/omniauth.rb	Tue, 02 Dec 2014 08:35:29 -0800
 config/initializers/session_store.rb	Tue, 02 Dec 2014 08:35:29 -0800
 config/initializers/wrap_parameters.rb	Tue, 02 Dec 2014 08:35:29 -0800
 config/routes.rb	Tue, 02 Dec 2014 08:41:59 -0800
-README.rdoc	Tue, 02 Dec 2014 08:53:18 -0800
+README.md	Tue, 02 Dec 2014 10:28:45 -0800
