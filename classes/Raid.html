@@ -42,9 +42,73 @@
       <div id='content'>
         <div id='text'>
           <div id='description'></div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Class</h3>
+            <ol>
+              <li><a target="docwin" href="#method-c-old">old</a></li>
+            </ol>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-admins">admins</a></li>
+              <li><a target="docwin" href="#method-i-members">members</a></li>
+            </ol>
+          </div>
           <div id='context'>
           </div>
           <div id='section'>
+            <div id='methods'>
+              <h2>Public Class methods</h2>
+              <div class='method public-class' id='method-method-c-old'>
+                <a name='method-c-old'></a>
+                <div class='synopsis'>
+                  <span class='name'>old</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-old-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-c-old-source'><span class="ruby-comment"># File app/models/raid.rb, line 16</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">old</span>&#x000A;  <span class="ruby-identifier">unscoped</span> { <span class="ruby-identifier">includes</span>(<span class="ruby-value">:permissions</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&#39;date &lt;= ?&#39;</span>, <span class="ruby-value">6</span>.<span class="ruby-identifier">hours</span>.<span class="ruby-identifier">ago</span>) }&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-admins'>
+                <a name='method-i-admins'></a>
+                <div class='synopsis'>
+                  <span class='name'>admins</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-admins-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-admins-source'><span class="ruby-comment"># File app/models/raid.rb, line 20</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">admins</span>&#x000A;  <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">find_all</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:admin?</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-members'>
+                <a name='method-i-members'></a>
+                <div class='synopsis'>
+                  <span class='name'>members</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-members-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-members-source'><span class="ruby-comment"># File app/models/raid.rb, line 24</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">members</span>&#x000A;  <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">find_all</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:member?</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -46,7 +46,10 @@
             <h2>Methods</h2>
             <h3>Public Instance</h3>
             <ol>
+              <li><a target="docwin" href="#method-i-create">create</a></li>
               <li><a target="docwin" href="#method-i-index">index</a></li>
+              <li><a target="docwin" href="#method-i-show">show</a></li>
+              <li><a target="docwin" href="#method-i-update">update</a></li>
             </ol>
           </div>
           <div id='context'>
@@ -54,6 +57,22 @@
           <div id='section'>
             <div id='methods'>
               <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-create'>
+                <a name='method-i-create'></a>
+                <div class='synopsis'>
+                  <span class='name'>create</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-create-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-create-source'><span class="ruby-comment"># File app/controllers/raids_controller.rb, line 21</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">Raid</span>&#x000A;&#x000A;  <span class="ruby-ivar">@raid</span> = <span class="ruby-constant">Raid</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">raid_params</span>)&#x000A;  <span class="ruby-ivar">@raid</span>.<span class="ruby-identifier">account</span> = <span class="ruby-ivar">@account</span>&#x000A;  <span class="ruby-ivar">@raid</span>.<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">to_permission</span>, <span class="ruby-value">:level</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin&#39;</span>)&#x000A;&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error saving raid&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@raid</span>.<span class="ruby-identifier">save</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
               <div class='method public-instance' id='method-method-i-index'>
                 <a name='method-i-index'></a>
                 <div class='synopsis'>
@@ -67,7 +86,39 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-index-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/raids_controller.rb, line 2</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/raids_controller.rb, line 2</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>&#x000A;  <span class="ruby-ivar">@raids</span> = <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">available_raids</span>&#x000A;&#x000A;  <span class="ruby-ivar">@raids</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">raid</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:read</span>, <span class="ruby-identifier">raid</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-show'>
+                <a name='method-i-show'></a>
+                <div class='synopsis'>
+                  <span class='name'>show</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-show-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-show-source'><span class="ruby-comment"># File app/controllers/raids_controller.rb, line 10</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>&#x000A;  <span class="ruby-ivar">@raid</span> = <span class="ruby-constant">Raid</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:read</span>, <span class="ruby-ivar">@raid</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-update'>
+                <a name='method-i-update'></a>
+                <div class='synopsis'>
+                  <span class='name'>update</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-update-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-update-source'><span class="ruby-comment"># File app/controllers/raids_controller.rb, line 15</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>&#x000A;  <span class="ruby-ivar">@raid</span> = <span class="ruby-constant">Raid</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:update</span>, <span class="ruby-ivar">@raid</span>&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error saving raid&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@raid</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">raid_params</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>
