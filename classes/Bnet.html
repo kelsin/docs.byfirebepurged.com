@@ -70,12 +70,13 @@
                 </div>
                 <div class='description'>
                   
+                  <p>Loads a character from the wow api</p>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-character-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-character-source'><span class="ruby-comment"># File lib/bnet.rb, line 14</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">character</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;/wow/character/#{realm}/#{name}&quot;</span>,&#x000A;                 <span class="ruby-value">:query</span> =<span class="ruby-operator">&gt;</span> {&#x000A;                   <span class="ruby-string">&#39;fields&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;items&#39;</span>,&#x000A;                   <span class="ruby-string">&#39;apikey&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;BNET_KEY&#39;</span>]&#x000A;                 })&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-character-source'><span class="ruby-comment"># File lib/bnet.rb, line 16</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">character</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;/wow/character/#{realm}/#{name}&quot;</span>,&#x000A;                 <span class="ruby-value">:query</span> =<span class="ruby-operator">&gt;</span> {&#x000A;                   <span class="ruby-string">&#39;fields&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;items&#39;</span>,&#x000A;                   <span class="ruby-string">&#39;apikey&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;BNET_KEY&#39;</span>]&#x000A;                 })&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-characters'>
@@ -86,12 +87,13 @@
                 </div>
                 <div class='description'>
                   
+                  <p>Loads the list of wow characters given a user&#39;s oauth access token</p>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-characters-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-characters-source'><span class="ruby-comment"># File lib/bnet.rb, line 5</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">characters</span>(<span class="ruby-identifier">access_token</span>)&#x000A;  <span class="ruby-identifier">response</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;/wow/user/characters&#39;</span>,&#x000A;                            <span class="ruby-value">:headers</span> =<span class="ruby-operator">&gt;</span> {&#x000A;                              <span class="ruby-string">&#39;Authorization&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Bearer #{access_token}&quot;</span>&#x000A;                            })&#x000A;&#x000A;  <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;characters&#39;</span>] <span class="ruby-operator">||</span> []&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-characters-source'><span class="ruby-comment"># File lib/bnet.rb, line 6</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">characters</span>(<span class="ruby-identifier">access_token</span>)&#x000A;  <span class="ruby-identifier">response</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;/wow/user/characters&#39;</span>,&#x000A;                            <span class="ruby-value">:headers</span> =<span class="ruby-operator">&gt;</span> {&#x000A;                              <span class="ruby-string">&#39;Authorization&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Bearer #{access_token}&quot;</span>&#x000A;                            })&#x000A;&#x000A;  <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;characters&#39;</span>] <span class="ruby-operator">||</span> []&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-ilvl'>
@@ -102,12 +104,13 @@
                 </div>
                 <div class='description'>
                   
+                  <p>Loads a character&#39;s ilvl from the wow api</p>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-ilvl-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-ilvl-source'><span class="ruby-comment"># File lib/bnet.rb, line 22</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">ilvl</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>)&#x000A;  <span class="ruby-identifier">character</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:[]</span>, <span class="ruby-string">&#39;items&#39;</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:[]</span>, <span class="ruby-string">&#39;averageItemLevel&#39;</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-ilvl-source'><span class="ruby-comment"># File lib/bnet.rb, line 25</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">ilvl</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>)&#x000A;  <span class="ruby-identifier">character</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:[]</span>, <span class="ruby-string">&#39;items&#39;</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:[]</span>, <span class="ruby-string">&#39;averageItemLevel&#39;</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>
