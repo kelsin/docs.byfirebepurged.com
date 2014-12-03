@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>Account</title>
+    <title>RaidsController</title>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -27,16 +27,16 @@
       <div class='header'>
         <h1 class='name'>
           <span class='type'>class</span>
-          Account
+          RaidsController
         </h1>
         <ol class='paths'>
           <li>
-            <a target="docwin" href="../files/app/models/account_rb.html">app/models/account.rb</a>
+            <a target="docwin" href="../files/app/controllers/raids_controller_rb.html">app/controllers/raids_controller.rb</a>
           </li>
         </ol>
         <div class='parent'>
           Superclass:
-          <strong>ActiveRecord::Base</strong>
+          <strong><a target="docwin" href="ApplicationController.html">ApplicationController</a></strong>
         </div>
       </div>
       <div id='content'>
@@ -46,7 +46,7 @@
             <h2>Methods</h2>
             <h3>Public Instance</h3>
             <ol>
-              <li><a target="docwin" href="#method-i-signed_up_for-3F">signed_up_for?</a></li>
+              <li><a target="docwin" href="#method-i-index">index</a></li>
             </ol>
           </div>
           <div id='context'>
@@ -54,20 +54,20 @@
           <div id='section'>
             <div id='methods'>
               <h2>Public Instance methods</h2>
-              <div class='method public-instance' id='method-method-i-signed_up_for-3F'>
-                <a name='method-i-signed_up_for-3F'></a>
+              <div class='method public-instance' id='method-method-i-index'>
+                <a name='method-i-index'></a>
                 <div class='synopsis'>
-                  <span class='name'>signed_up_for?</span>
-                  <span class='arguments'>(raid)</span>
+                  <span class='name'>index</span>
+                  <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
                   
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-signed_up_for-3F-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-index-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-signed_up_for-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 9</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">signed_up_for?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">raids</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">raid</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/raids_controller.rb, line 2</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>
