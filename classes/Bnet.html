@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>Bnet</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          Bnet
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../files/lib/bnet_rb.html">lib/bnet.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Superclass:
+          <strong>Object</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'></div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-character">character</a></li>
+              <li><a target="docwin" href="#method-i-characters">characters</a></li>
+              <li><a target="docwin" href="#method-i-ilvl">ilvl</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+            <div id='includes'>
+              <h2>Included modules</h2>
+              <ol>
+                <li>HTTParty</li>
+              </ol>
+            </div>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-character'>
+                <a name='method-i-character'></a>
+                <div class='synopsis'>
+                  <span class='name'>character</span>
+                  <span class='arguments'>(name, realm)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-character-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-character-source'><span class="ruby-comment"># File lib/bnet.rb, line 14</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">character</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;/wow/character/#{realm}/#{name}&quot;</span>,&#x000A;                 <span class="ruby-value">:query</span> =<span class="ruby-operator">&gt;</span> {&#x000A;                   <span class="ruby-string">&#39;fields&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;items&#39;</span>,&#x000A;                   <span class="ruby-string">&#39;apikey&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;BNET_KEY&#39;</span>]&#x000A;                 })&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-characters'>
+                <a name='method-i-characters'></a>
+                <div class='synopsis'>
+                  <span class='name'>characters</span>
+                  <span class='arguments'>(access_token)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-characters-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-characters-source'><span class="ruby-comment"># File lib/bnet.rb, line 5</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">characters</span>(<span class="ruby-identifier">access_token</span>)&#x000A;  <span class="ruby-identifier">response</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&#39;/wow/user/characters&#39;</span>,&#x000A;                            <span class="ruby-value">:headers</span> =<span class="ruby-operator">&gt;</span> {&#x000A;                              <span class="ruby-string">&#39;Authorization&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Bearer #{access_token}&quot;</span>&#x000A;                            })&#x000A;&#x000A;  <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;characters&#39;</span>] <span class="ruby-operator">||</span> []&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-ilvl'>
+                <a name='method-i-ilvl'></a>
+                <div class='synopsis'>
+                  <span class='name'>ilvl</span>
+                  <span class='arguments'>(name, realm)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-ilvl-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-ilvl-source'><span class="ruby-comment"># File lib/bnet.rb, line 22</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">ilvl</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>)&#x000A;  <span class="ruby-identifier">character</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">realm</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:[]</span>, <span class="ruby-string">&#39;items&#39;</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:[]</span>, <span class="ruby-string">&#39;averageItemLevel&#39;</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>
