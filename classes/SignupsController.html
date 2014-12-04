@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>SignupsController</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          SignupsController
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../files/app/controllers/signups_controller_rb.html">app/controllers/signups_controller.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Superclass:
+          <strong><a target="docwin" href="ApplicationController.html">ApplicationController</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'></div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-create">create</a></li>
+              <li><a target="docwin" href="#method-i-destroy">destroy</a></li>
+              <li><a target="docwin" href="#method-i-index">index</a></li>
+              <li><a target="docwin" href="#method-i-show">show</a></li>
+              <li><a target="docwin" href="#method-i-update">update</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-create'>
+                <a name='method-i-create'></a>
+                <div class='synopsis'>
+                  <span class='name'>create</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-create-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-create-source'><span class="ruby-comment"># File app/controllers/signups_controller.rb, line 8</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>&#x000A;  <span class="ruby-ivar">@character</span> = <span class="ruby-constant">Character</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">signup_params</span>[<span class="ruby-value">:character_id</span>])&#x000A;&#x000A;  <span class="ruby-ivar">@signup</span> = <span class="ruby-constant">Signup</span>.<span class="ruby-identifier">find_or_create_by</span>(<span class="ruby-identifier">signup_params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:raid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@raid</span>))&#x000A;&#x000A;  <span class="ruby-comment"># If you can read the raid, then you can signup for it</span>&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:create</span>, <span class="ruby-ivar">@signup</span>&#x000A;&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error signing up for raid&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@signup</span>.<span class="ruby-identifier">save</span>&#x000A;  <span class="ruby-identifier">render</span> <span class="ruby-value">:show</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-destroy'>
+                <a name='method-i-destroy'></a>
+                <div class='synopsis'>
+                  <span class='name'>destroy</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-destroy-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-destroy-source'><span class="ruby-comment"># File app/controllers/signups_controller.rb, line 27</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>&#x000A;  <span class="ruby-ivar">@signup</span> = <span class="ruby-ivar">@raid</span>.<span class="ruby-identifier">signups</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:destroy</span>, <span class="ruby-ivar">@signup</span>&#x000A;&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error deleting signup&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@signup</span>.<span class="ruby-identifier">destroy</span>&#x000A;  <span class="ruby-identifier">render</span> <span class="ruby-value">:show</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-index'>
+                <a name='method-i-index'></a>
+                <div class='synopsis'>
+                  <span class='name'>index</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-index-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/signups_controller.rb, line 4</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:read</span>, <span class="ruby-ivar">@raid</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-show'>
+                <a name='method-i-show'></a>
+                <div class='synopsis'>
+                  <span class='name'>show</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-show-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-show-source'><span class="ruby-comment"># File app/controllers/signups_controller.rb, line 35</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>&#x000A;  <span class="ruby-ivar">@signup</span> = <span class="ruby-ivar">@raid</span>.<span class="ruby-identifier">signups</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:read</span>, <span class="ruby-ivar">@signup</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-update'>
+                <a name='method-i-update'></a>
+                <div class='synopsis'>
+                  <span class='name'>update</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-update-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-update-source'><span class="ruby-comment"># File app/controllers/signups_controller.rb, line 20</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>&#x000A;  <span class="ruby-ivar">@signup</span> = <span class="ruby-ivar">@raid</span>.<span class="ruby-identifier">signups</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:update</span>, <span class="ruby-ivar">@signup</span>&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error saving signup&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@signup</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">signup_params</span>)&#x000A;  <span class="ruby-identifier">render</span> <span class="ruby-value">:show</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

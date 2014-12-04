@@ -47,10 +47,14 @@
             <h3>Public Class</h3>
             <ol>
               <li><a target="docwin" href="#method-c-old">old</a></li>
+              <li><a target="docwin" href="#method-c-with_permissions">with_permissions</a></li>
+              <li><a target="docwin" href="#method-c-with_signups">with_signups</a></li>
             </ol>
             <h3>Public Instance</h3>
             <ol>
               <li><a target="docwin" href="#method-i-admins">admins</a></li>
+              <li><a target="docwin" href="#method-i-characters">characters</a></li>
+              <li><a target="docwin" href="#method-i-guilds">guilds</a></li>
               <li><a target="docwin" href="#method-i-members">members</a></li>
             </ol>
           </div>
@@ -72,7 +76,39 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-c-old-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-c-old-source'><span class="ruby-comment"># File app/models/raid.rb, line 16</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">old</span>&#x000A;  <span class="ruby-identifier">unscoped</span> { <span class="ruby-identifier">includes</span>(<span class="ruby-value">:permissions</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&#39;date &lt;= ?&#39;</span>, <span class="ruby-value">6</span>.<span class="ruby-identifier">hours</span>.<span class="ruby-identifier">ago</span>) }&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-c-old-source'><span class="ruby-comment"># File app/models/raid.rb, line 23</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">old</span>&#x000A;  <span class="ruby-identifier">unscoped</span> { <span class="ruby-identifier">includes</span>(<span class="ruby-value">:permissions</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&#39;date &lt;= ?&#39;</span>, <span class="ruby-value">6</span>.<span class="ruby-identifier">hours</span>.<span class="ruby-identifier">ago</span>) }&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-class' id='method-method-c-with_permissions'>
+                <a name='method-c-with_permissions'></a>
+                <div class='synopsis'>
+                  <span class='name'>with_permissions</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-with_permissions-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-c-with_permissions-source'><span class="ruby-comment"># File app/models/raid.rb, line 15</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">with_permissions</span>&#x000A;  <span class="ruby-identifier">includes</span>(<span class="ruby-value">:permissions</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-class' id='method-method-c-with_signups'>
+                <a name='method-c-with_signups'></a>
+                <div class='synopsis'>
+                  <span class='name'>with_signups</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-with_signups-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-c-with_signups-source'><span class="ruby-comment"># File app/models/raid.rb, line 19</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">with_signups</span>&#x000A;  <span class="ruby-identifier">includes</span>(<span class="ruby-value">:signups</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:character</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:guild</span> })&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <h2>Public Instance methods</h2>
@@ -89,7 +125,39 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-admins-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-admins-source'><span class="ruby-comment"># File app/models/raid.rb, line 20</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">admins</span>&#x000A;  <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">find_all</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:admin?</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-admins-source'><span class="ruby-comment"># File app/models/raid.rb, line 35</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">admins</span>&#x000A;  <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">find_all</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:admin?</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-characters'>
+                <a name='method-i-characters'></a>
+                <div class='synopsis'>
+                  <span class='name'>characters</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-characters-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-characters-source'><span class="ruby-comment"># File app/models/raid.rb, line 27</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">characters</span>&#x000A;  <span class="ruby-identifier">signups</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:character</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-guilds'>
+                <a name='method-i-guilds'></a>
+                <div class='synopsis'>
+                  <span class='name'>guilds</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-guilds-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-guilds-source'><span class="ruby-comment"># File app/models/raid.rb, line 31</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">guilds</span>&#x000A;  <span class="ruby-identifier">characters</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:guild</span>).<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">sort</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-members'>
@@ -105,7 +173,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-members-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-members-source'><span class="ruby-comment"># File app/models/raid.rb, line 24</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">members</span>&#x000A;  <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">find_all</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:member?</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-members-source'><span class="ruby-comment"># File app/models/raid.rb, line 39</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">members</span>&#x000A;  <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">find_all</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:member?</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>
