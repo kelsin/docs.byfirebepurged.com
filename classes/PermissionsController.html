@@ -68,7 +68,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-create-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-create-source'><span class="ruby-comment"># File app/controllers/permissions_controller.rb, line 9</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:manage</span>, <span class="ruby-ivar">@permissioned</span>&#x000A;  <span class="ruby-ivar">@permission</span> = <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">permission_params</span>)&#x000A;  <span class="ruby-ivar">@permissioned</span>.<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@permission</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-create-source'><span class="ruby-comment"># File app/controllers/permissions_controller.rb, line 8</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>&#x000A;  <span class="ruby-ivar">@permission</span> = <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">permission_params</span>)&#x000A;  <span class="ruby-ivar">@permissioned</span>.<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@permission</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-index'>
@@ -84,7 +84,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-index-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/permissions_controller.rb, line 4</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>&#x000A;  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:manage</span>, <span class="ruby-ivar">@permissioned</span>&#x000A;  <span class="ruby-ivar">@permissions</span> = <span class="ruby-ivar">@permissioned</span>.<span class="ruby-identifier">permissions</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/permissions_controller.rb, line 4</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>&#x000A;  <span class="ruby-ivar">@permissions</span> = <span class="ruby-ivar">@permissioned</span>.<span class="ruby-identifier">permissions</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>

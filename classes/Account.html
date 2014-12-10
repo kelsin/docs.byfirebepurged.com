@@ -52,6 +52,7 @@
               <li><a target="docwin" href="#method-i-creator-3F">creator?</a></li>
               <li><a target="docwin" href="#method-i-guilds">guilds</a></li>
               <li><a target="docwin" href="#method-i-permissions">permissions</a></li>
+              <li><a target="docwin" href="#method-i-roles">roles</a></li>
               <li><a target="docwin" href="#method-i-seated-3F">seated?</a></li>
               <li><a target="docwin" href="#method-i-signed_up-3F">signed_up?</a></li>
               <li><a target="docwin" href="#method-i-signup_for">signup_for</a></li>
@@ -76,7 +77,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-admin-3F-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-admin-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 29</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">admin?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  (<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">admins</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:key</span>)).<span class="ruby-identifier">present?</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-admin-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 35</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">admin?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">check</span>(<span class="ruby-identifier">permissions</span>, <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">admins</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-available-3F'>
@@ -92,7 +93,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-available-3F-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-available-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 33</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">available?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  (<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:key</span>)).<span class="ruby-identifier">present?</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-available-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 39</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">available?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">check</span>(<span class="ruby-identifier">permissions</span>, <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">permissionKeys</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-available_raids'>
@@ -108,7 +109,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-available_raids-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-available_raids-source'><span class="ruby-comment"># File app/models/account.rb, line 45</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">available_raids</span>&#x000A;  <span class="ruby-ivar">@available_raids</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Raid</span>.<span class="ruby-identifier">includes</span>(<span class="ruby-value">:signups</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:character</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:guild</span> }).<span class="ruby-identifier">where</span>(<span class="ruby-value">:permissions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">permissions</span> })&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-available_raids-source'><span class="ruby-comment"># File app/models/account.rb, line 51</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">available_raids</span>&#x000A;  <span class="ruby-ivar">@available_raids</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Raid</span>.<span class="ruby-identifier">includes</span>(<span class="ruby-value">:account</span>, <span class="ruby-value">:signups</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:character</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:guild</span> }).<span class="ruby-identifier">where</span>(<span class="ruby-value">:permissions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">permissions</span> })&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-creator-3F'>
@@ -124,7 +125,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-creator-3F-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-creator-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 37</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">creator?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">account_id</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-creator-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 43</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">creator?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">account_id</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-guilds'>
@@ -156,7 +157,23 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-permissions-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-permissions-source'><span class="ruby-comment"># File app/models/account.rb, line 49</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">permissions</span>&#x000A;  [<span class="ruby-identifier">to_permission</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">characters</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">c</span>.<span class="ruby-identifier">to_permission</span>&#x000A;  <span class="ruby-keyword">end</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">guilds</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">g</span>.<span class="ruby-identifier">to_permission</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-permissions-source'><span class="ruby-comment"># File app/models/account.rb, line 55</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">permissions</span>&#x000A;  [<span class="ruby-identifier">to_permission</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">characters</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">c</span>.<span class="ruby-identifier">to_permission</span>&#x000A;  <span class="ruby-keyword">end</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">guilds</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">g</span>.<span class="ruby-identifier">to_permission</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-roles'>
+                <a name='method-i-roles'></a>
+                <div class='synopsis'>
+                  <span class='name'>roles</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-roles-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-roles-source'><span class="ruby-comment"># File app/models/account.rb, line 15</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">roles</span>&#x000A;  <span class="ruby-identifier">characters</span>.<span class="ruby-identifier">inject</span>([]) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">roles</span>, <span class="ruby-identifier">character</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">roles</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">character</span>.<span class="ruby-identifier">roles</span>&#x000A;  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">sort</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-seated-3F'>
@@ -172,7 +189,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-seated-3F-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-seated-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 25</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">seated?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-operator">!</span><span class="ruby-operator">!</span>(<span class="ruby-identifier">signup_for</span>(<span class="ruby-identifier">raid</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:seated?</span>))&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-seated-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 31</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">seated?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-operator">!</span><span class="ruby-operator">!</span>(<span class="ruby-identifier">signup_for</span>(<span class="ruby-identifier">raid</span>).<span class="ruby-identifier">try</span>(<span class="ruby-value">:seated?</span>))&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-signed_up-3F'>
@@ -188,7 +205,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-signed_up-3F-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-signed_up-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 21</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">signed_up?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">signup_for</span>(<span class="ruby-identifier">raid</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-signed_up-3F-source'><span class="ruby-comment"># File app/models/account.rb, line 27</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">signed_up?</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">signup_for</span>(<span class="ruby-identifier">raid</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-signup_for'>
@@ -204,7 +221,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-signup_for-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-signup_for-source'><span class="ruby-comment"># File app/models/account.rb, line 15</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">signup_for</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">signups</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">signup</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">signup</span>.<span class="ruby-identifier">raid_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">id</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-signup_for-source'><span class="ruby-comment"># File app/models/account.rb, line 21</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">signup_for</span>(<span class="ruby-identifier">raid</span>)&#x000A;  <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">signups</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">signup</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">signup</span>.<span class="ruby-identifier">raid_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">raid</span>.<span class="ruby-identifier">id</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-method-i-to_permission'>
@@ -220,7 +237,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('method-i-to_permission-source'); return false">
                     [show source]
                   </a>
-                  <pre id='method-i-to_permission-source'><span class="ruby-comment"># File app/models/account.rb, line 41</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_permission</span>&#x000A;  <span class="ruby-node">&quot;Account|#{account_id}&quot;</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                  <pre id='method-i-to_permission-source'><span class="ruby-comment"># File app/models/account.rb, line 47</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_permission</span>&#x000A;  <span class="ruby-node">&quot;Account|#{account_id}&quot;</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
             </div>

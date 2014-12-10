@@ -47,6 +47,7 @@
             <h3>Public Class</h3>
             <ol>
               <li><a target="docwin" href="#method-c-admin">admin</a></li>
+              <li><a target="docwin" href="#method-c-check">check</a></li>
             </ol>
             <h3>Public Instance</h3>
             <ol>
@@ -76,6 +77,22 @@
                     [show source]
                   </a>
                   <pre id='method-c-admin-source'><span class="ruby-comment"># File app/models/permission.rb, line 7</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">admin</span>&#x000A;  <span class="ruby-identifier">where</span>(<span class="ruby-value">:level</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin&#39;</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-class' id='method-method-c-check'>
+                <a name='method-c-check'></a>
+                <div class='synopsis'>
+                  <span class='name'>check</span>
+                  <span class='arguments'>(a, b)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-check-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-c-check-source'><span class="ruby-comment"># File app/models/permission.rb, line 31</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">check</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>)&#x000A;  (<span class="ruby-identifier">a</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">b</span>).<span class="ruby-identifier">present?</span>&#x000A;<span class="ruby-keyword">end</span></pre>
                 </div>
               </div>
               <h2>Public Instance methods</h2>
