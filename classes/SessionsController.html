@@ -1,160 +1,166 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
-  <head>
-    <title>SessionsController</title>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
-    <script type='text/javascript'>
-      //<![CDATA[
-        function popupCode(url) {
-          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
-        }
-        
-        function toggleCode(id) {
-          var code = document.getElementById(id)
-        
-          code.style.display = code.style.display != 'block' ? 'block' : 'none'
-          return true
-        }
-        
-        // Make codeblocks hidden by default
-        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
-      //]]>
-    </script>
-  </head>
-  <body class='page'>
-    <div class='class' id='wrapper'>
-      <div class='header'>
-        <h1 class='name'>
-          <span class='type'>class</span>
-          SessionsController
-        </h1>
-        <ol class='paths'>
-          <li>
-            <a target="docwin" href="../files/app/controllers/sessions_controller_rb.html">app/controllers/sessions_controller.rb</a>
-          </li>
-        </ol>
-        <div class='parent'>
-          Superclass:
-          <strong><a target="docwin" href="ApplicationController.html">ApplicationController</a></strong>
-        </div>
-      </div>
-      <div id='content'>
-        <div id='text'>
-          <div id='description'></div>
-          <div id='method-list'>
-            <h2>Methods</h2>
-            <h3>Public Instance</h3>
-            <ol>
-              <li><a target="docwin" href="#method-i-create">create</a></li>
-              <li><a target="docwin" href="#method-i-destroy">destroy</a></li>
-              <li><a target="docwin" href="#method-i-index">index</a></li>
-              <li><a target="docwin" href="#method-i-new">new</a></li>
-            </ol>
-          </div>
-          <div id='context'>
-          </div>
-          <div id='section'>
-            <div id='methods'>
-              <h2>Public Instance methods</h2>
-              <div class='method public-instance' id='method-method-i-create'>
-                <a name='method-i-create'></a>
-                <div class='synopsis'>
-                  <span class='name'>create</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  
-                  <p>This is the OAuth redirect route that we use when using Battle.net&#39;s
-                  OAuth authentication.</p>
-                  
-                  <p>This route creates or saves the user with the proper account_id and
-                  battletag and then loads their WoW characters and redirects to the original
-                  redirect url provided by the user when they hit <code>new</code></p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-create-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='method-i-create-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 55</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>&#x000A;  <span class="ruby-comment"># First find the login record created for this authentication attempt</span>&#x000A;  <span class="ruby-ivar">@login</span> = <span class="ruby-constant">Login</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-identifier">params_hash</span>[<span class="ruby-string">&#39;key&#39;</span>])&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-node">&quot;Can not find login request for #{params_hash[&#39;key&#39;]}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@login</span>&#x000A;&#x000A;  <span class="ruby-comment"># Now find or create the account for this Battle.net account</span>&#x000A;  <span class="ruby-keyword">begin</span>&#x000A;    <span class="ruby-ivar">@account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">find_or_initialize_by</span>(<span class="ruby-value">:account_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">auth_hash</span>[<span class="ruby-string">&#39;info&#39;</span>][<span class="ruby-string">&#39;id&#39;</span>])&#x000A;  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotUnique</span>&#x000A;    <span class="ruby-keyword">retry</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@account</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">update</span>(<span class="ruby-value">:battletag</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">auth_hash</span>[<span class="ruby-string">&#39;info&#39;</span>][<span class="ruby-string">&#39;battletag&#39;</span>])&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error attempting to find and update account&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-comment"># Now create a session for this user</span>&#x000A;  <span class="ruby-keyword">begin</span>&#x000A;    <span class="ruby-ivar">@session</span> = <span class="ruby-constant">Session</span>.<span class="ruby-identifier">find_or_initialize_by</span>(<span class="ruby-value">:access_token</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">auth_hash</span>[<span class="ruby-string">&#39;credentials&#39;</span>][<span class="ruby-string">&#39;token&#39;</span>],&#x000A;                                             <span class="ruby-value">:account_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">id</span>)&#x000A;  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotUnique</span>&#x000A;    <span class="ruby-keyword">retry</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@session</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@session</span>.<span class="ruby-identifier">update</span>(<span class="ruby-value">:key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>)&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error attempting to find and update session&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-comment"># Update characters if it&#39;s been an hour since last login</span>&#x000A;  <span class="ruby-identifier">update_characters</span>&#x000A;&#x000A;  <span class="ruby-identifier">redirect_to</span> <span class="ruby-node">&quot;#{@login.redirect}#{@session.key}&quot;</span>&#x000A;<span class="ruby-keyword">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-method-i-destroy'>
-                <a name='method-i-destroy'></a>
-                <div class='synopsis'>
-                  <span class='name'>destroy</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-destroy-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='method-i-destroy-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 89</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>&#x000A;  <span class="ruby-ivar">@session</span>.<span class="ruby-identifier">try</span>(<span class="ruby-value">:destroy</span>)&#x000A;&#x000A;  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:logged_out</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span> }&#x000A;<span class="ruby-keyword">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-method-i-index'>
-                <a name='method-i-index'></a>
-                <div class='synopsis'>
-                  <span class='name'>index</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  
-                  <p>Provides some static data to point users to the proper API requests and
-                  websites.</p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-index-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 11</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>&#x000A;<span class="ruby-keyword">end</span></pre>
-                </div>
-              </div>
-              <div class='method public-instance' id='method-method-i-new'>
-                <a name='method-i-new'></a>
-                <div class='synopsis'>
-                  <span class='name'>new</span>
-                  <span class='arguments'>()</span>
-                </div>
-                <div class='description'>
-                  
-                  <p>Attempts to login to the api. You must pass in a json body in the following
-                  form:</p>
-                  
-                  <pre>{&#x000A;  &quot;redirect&quot;: &quot;https://localhost/?key=&quot;&#x000A;}</pre>
-                  
-                  <p>The response will look like:</p>
-                  
-                  <pre>{&#x000A;  &quot;method&quot;: &quot;Battle.net OAuth 2.0&quot;,&#x000A;  &quot;href&quot;: &quot;https://localhost:3000/auth/bnet?key=960c109e-af1f-4012-9e8a-31783a3e9270&quot;&#x000A;}</pre>
-                  
-                  <p>To complete a login, forward your user to the provided href value, and then
-                  we will redirect to your original redirect value with your proper API key
-                  appended. In our example we would redirect to a url like:</p>
-                  
-                  <pre>https://localhost/?key=51032c55-5ff6-4ee7-887c-3d2e2f3587e1</pre>
-                  
-                  <p>From now on just append the following header to all API requests:</p>
-                  
-                  <pre>Authorization: apikey 51032c55-5ff6-4ee7-887c-3d2e2f3587e1</pre>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-new-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='method-i-new-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 36</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Must provide a redirect value&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>]&#x000A;&#x000A;  <span class="ruby-identifier">redirect</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>]) <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>&#x000A;&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">redirect</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>) <span class="ruby-keyword">or</span> <span class="ruby-identifier">redirect</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPS</span>)&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Redirect value must be a valid http or https url&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@login</span> = <span class="ruby-constant">Login</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>,&#x000A;                        <span class="ruby-value">:redirect</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>])&#x000A;<span class="ruby-keyword">end</span></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id='footer-push'></div>
-    </div>
-    <div id='footer'>
-      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
-    </div>
-  </body>
+<head>
+<title>SessionsController</title>
+<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+<link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+<script type='text/javascript'>
+  function popupCode(url) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  
+  function toggleCode(id) {
+    var code = document.getElementById(id)
+  
+    code.style.display = code.style.display != 'block' ? 'block' : 'none'
+    return true
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+</script>
+</head>
+<body class='page'>
+<div class='class' id='wrapper'>
+<div class='header'>
+<h1 class='name'><span class='type'>class</span>
+SessionsController
+</h1>
+<ol class='paths'>
+<li>
+<a href="../files/app/controllers/sessions_controller_rb.html">app/controllers/sessions_controller.rb</a>
+</li>
+</ol>
+<div class='parent'>
+Superclass:
+<strong><a href="ApplicationController.html">ApplicationController</a></strong>
+</div>
+</div>
+<div id='content'>
+<div id='text'>
+<div id='description'></div>
+<div id='method-list'>
+<h2>Methods</h2>
+<h3>Public Instance</h3>
+<ol>
+<li><a href="#method-i-create">create</a></li>
+<li><a href="#method-i-destroy">destroy</a></li>
+<li><a href="#method-i-index">index</a></li>
+<li><a href="#method-i-new">new</a></li>
+</ol>
+</div>
+<div id='context'>
+</div>
+<div id='section'>
+<div id='methods'>
+<h2>Public Instance methods</h2>
+<div class='method public-instance' id='method-method-i-create'>
+<a name='method-i-create'></a>
+<div class='synopsis'>
+<span class='name'>create</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>This is the OAuth redirect route that we use when using Battle.net&#39;s
+OAuth authentication.</p>
+
+<p>This route creates or saves the user with the proper account_id and
+battletag and then loads their WoW characters and redirects to the original
+redirect url provided by the user when they hit <code>new</code></p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-create-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-create-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 55</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>&#x000A;  <span class="ruby-comment"># First find the login record created for this authentication attempt</span>&#x000A;  <span class="ruby-ivar">@login</span> = <span class="ruby-constant">Login</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-identifier">params_hash</span>[<span class="ruby-string">&#39;key&#39;</span>])&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-node">&quot;Can not find login request for #{params_hash[&#39;key&#39;]}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@login</span>&#x000A;&#x000A;  <span class="ruby-comment"># Now find or create the account for this Battle.net account</span>&#x000A;  <span class="ruby-keyword">begin</span>&#x000A;    <span class="ruby-ivar">@account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">find_or_initialize_by</span>(<span class="ruby-value">:account_id</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">auth_hash</span>[<span class="ruby-string">&#39;info&#39;</span>][<span class="ruby-string">&#39;id&#39;</span>])&#x000A;  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotUnique</span>&#x000A;    <span class="ruby-keyword">retry</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error attempting to find account&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@account</span>&#x000A;&#x000A;  <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>&#x000A;  <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">battletag</span> = <span class="ruby-identifier">auth_hash</span>[<span class="ruby-string">&#39;info&#39;</span>][<span class="ruby-string">&#39;battletag&#39;</span>]&#x000A;&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error attempting to update account&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">save</span>&#x000A;&#x000A;  <span class="ruby-comment"># Now create a session for this user</span>&#x000A;  <span class="ruby-ivar">@session</span> = <span class="ruby-constant">Session</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:access_token</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">auth_hash</span>[<span class="ruby-string">&#39;credentials&#39;</span>][<span class="ruby-string">&#39;token&#39;</span>],&#x000A;                            <span class="ruby-value">:account_id</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-ivar">@account</span>.<span class="ruby-identifier">id</span>,&#x000A;                            <span class="ruby-value">:key</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>)&#x000A;&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Error creating session&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@session</span>&#x000A;&#x000A;  <span class="ruby-comment"># Update characters if it&#39;s been an hour since last login</span>&#x000A;  <span class="ruby-identifier">update_characters</span>&#x000A;&#x000A;  <span class="ruby-identifier">redirect_to</span> <span class="ruby-node">&quot;#{@login.redirect}#{@session.key}&quot;</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-destroy'>
+<a name='method-i-destroy'></a>
+<div class='synopsis'>
+<span class='name'>destroy</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-destroy-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-destroy-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 87</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">destroy</span>&#x000A;  <span class="ruby-ivar">@session</span>.<span class="ruby-identifier">try</span>(<span class="ruby-value">:destroy</span>)&#x000A;&#x000A;  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> <span class="ruby-operator">=&gt;</span> { <span class="ruby-value">:logged_out</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span> }&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-index'>
+<a name='method-i-index'></a>
+<div class='synopsis'>
+<span class='name'>index</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>Provides some static data to point users to the proper API requests and
+websites.</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-index-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-index-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 11</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">index</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-new'>
+<a name='method-i-new'></a>
+<div class='synopsis'>
+<span class='name'>new</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>Attempts to login to the api. You must pass in a json body in the following
+form:</p>
+
+<pre class="ruby">{&#x000A;  <span class="ruby-value">&quot;redirect&quot;:</span> <span class="ruby-string">&quot;https://localhost/?key=&quot;</span>&#x000A;}</pre>
+
+<p>The response will look like:</p>
+
+<pre class="ruby">{&#x000A;  <span class="ruby-value">&quot;method&quot;:</span> <span class="ruby-string">&quot;Battle.net OAuth 2.0&quot;</span>,&#x000A;  <span class="ruby-value">&quot;href&quot;:</span> <span class="ruby-string">&quot;https://localhost:3000/auth/bnet?key=960c109e-af1f-4012-9e8a-31783a3e9270&quot;</span>&#x000A;}</pre>
+
+<p>To complete a login, forward your user to the provided href value, and then
+we will redirect to your original redirect value with your proper API key
+appended. In our example we would redirect to a url like:</p>
+
+<pre>https://localhost/?key=51032c55-5ff6-4ee7-887c-3d2e2f3587e1</pre>
+
+<p>From now on just append the following header to all API requests:</p>
+
+<pre>Authorization: apikey 51032c55-5ff6-4ee7-887c-3d2e2f3587e1</pre>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-new-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-new-source'><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 36</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new</span>&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Must provide a redirect value&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>]&#x000A;&#x000A;  <span class="ruby-identifier">redirect</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>]) <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>&#x000A;&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">redirect</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>) <span class="ruby-keyword">or</span> <span class="ruby-identifier">redirect</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPS</span>)&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exceptions</span><span class="ruby-operator">::</span><span class="ruby-constant">ByFireBePurgedError</span>, <span class="ruby-string">&#39;Redirect value must be a valid http or https url&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@login</span> = <span class="ruby-constant">Login</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:key</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">uuid</span>,&#x000A;                        <span class="ruby-value">:redirect</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect</span>])&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id='footer-push'></div>
+</div>
+<div id='footer'>
+<a href="https://github.com/rdoc/hanna-nouveau"><strong>Hanna Nouveau</strong> RDoc template</a>
+</div>
+</body>
 </html>
